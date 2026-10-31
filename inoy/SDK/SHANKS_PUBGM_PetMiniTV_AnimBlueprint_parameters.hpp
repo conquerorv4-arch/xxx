@@ -1,0 +1,107 @@
+#pragma once
+
+// WE SUPPORT FUN  (4.6.0) SDKGen by @O_N_E_B_I_E_C_E | @onebiecerr 
+// Send Message Me For SDKGen Tool  
+// Generate on Tue Sep  8 20:36:07 2026
+ 
+#include "../SDK.hpp"
+
+namespace SDK
+{
+//---------------------------------------------------------------------------
+//Parameters
+//---------------------------------------------------------------------------
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_1DDC764C421D165D8327F2911CC4991C
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_1DDC764C421D165D8327F2911CC4991C_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendSpacePlayer_2306A39C4D7CE8A70EECEBB37BFCCB93
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendSpacePlayer_2306A39C4D7CE8A70EECEBB37BFCCB93_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_C17DD9FF4071D328B547BEA232EEB16F
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_C17DD9FF4071D328B547BEA232EEB16F_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_SequencePlayer_009041B3462D8CF2D4A201865DD876D2
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_SequencePlayer_009041B3462D8CF2D4A201865DD876D2_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_CA199F1E416BF993AF4C84B8BAFD41C4
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_CA199F1E416BF993AF4C84B8BAFD41C4_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_SequencePlayer_BE8933BC4CCCEB2BCB7183AD234DBB67
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_SequencePlayer_BE8933BC4CCCEB2BCB7183AD234DBB67_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_SequencePlayer_A30E6183458B0B3F2595A8A2ED7F8D0C
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_SequencePlayer_A30E6183458B0B3F2595A8A2ED7F8D0C_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendListByBool_2DE059B04DF7111204D21EBAFE22CE81
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendListByBool_2DE059B04DF7111204D21EBAFE22CE81_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendListByBool_823FBE9B475C16E23156C4A71722896F
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendListByBool_823FBE9B475C16E23156C4A71722896F_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendListByBool_3D1960524214E1A6816BEF84FE55493B
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_BlendListByBool_3D1960524214E1A6816BEF84FE55493B_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_00BBBF784BC9B749FFA330BFA402AEBD
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_00BBBF784BC9B749FFA330BFA402AEBD_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_50BBE809472C38EAB593E3834784AEDB
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_50BBE809472C38EAB593E3834784AEDB_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.AnimNotify_OnEnterIdle
+struct UPetMiniTV_AnimBlueprint_C_AnimNotify_OnEnterIdle_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.AnimNotify_OnLeftIdle
+struct UPetMiniTV_AnimBlueprint_C_AnimNotify_OnLeftIdle_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.AnimNotify_OnEnterSleepStart
+struct UPetMiniTV_AnimBlueprint_C_AnimNotify_OnEnterSleepStart_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.AnimNotify_OnLeftSleepStart
+struct UPetMiniTV_AnimBlueprint_C_AnimNotify_OnLeftSleepStart_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_8184F36049B1B9154763B98AE881E97B
+struct UPetMiniTV_AnimBlueprint_C_EvaluateGraphExposedInputs_ExecuteUbergraph_PetMiniTV_AnimBlueprint_AnimGraphNode_TransitionResult_8184F36049B1B9154763B98AE881E97B_Params
+{
+};
+
+// Function PetMiniTV_AnimBlueprint.PetMiniTV_AnimBlueprint_C.ExecuteUbergraph_PetMiniTV_AnimBlueprint
+struct UPetMiniTV_AnimBlueprint_C_ExecuteUbergraph_PetMiniTV_AnimBlueprint_Params
+{
+	int                                                EntryPoint;                                               // (BlueprintVisible, BlueprintReadOnly, Parm, ZeroConstructor, IsPlainOldData)
+};
+
+}
+
