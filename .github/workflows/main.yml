@@ -1,0 +1,59 @@
+name: Build Tweak
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies & Build ldid
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang make dpkg git curl unzip libssl-dev libplist-dev
+          
+          # ldid alətini mənbədən kompilyasiya edirik
+          git clone https://github.com/ProcursusTeam/ldid.git
+          cd ldid
+          make
+          sudo cp ldid /usr/local/bin/ldid
+          cd ..
+          rm -rf ldid
+          
+          if [ -d "/opt/theos" ]; then
+            sudo rm -rf /opt/theos
+          fi
+          sudo git clone --recursive https://github.com/theos/theos.git /opt/theos
+          
+          # SDK qovluğunu tənzimləyirik
+          sudo rm -rf /opt/theos/sdks
+          sudo git clone --depth=1 https://github.com/theos/sdks.git /opt/theos/sdks
+          
+          # Linux toolchain qovluğunu yaradıb sistem clang/clang++ fayllarını linkləyirik
+          sudo mkdir -p /opt/theos/toolchain/linux/iphone/bin
+          sudo ln -s /usr/bin/clang /opt/theos/toolchain/linux/iphone/bin/clang
+          sudo ln -s /usr/bin/clang++ /opt/theos/toolchain/linux/iphone/bin/clang++
+          
+          sudo chmod -R 777 /opt/theos
+
+      - name: Build Tweak
+        run: |
+          export THEOS=/opt/theos
+          export PATH="$THEOS/bin:$PATH"
+          make clean
+          make package
+
+      - name: Upload Artifacts (Deb & Dylib)
+        uses: actions/upload-artifact@v4
+        with:
+          name: M7MD-Build-Artifacts
+          path: |
+            packages/*.deb
+            .theos/obj/*.dylib
+            .theos/obj/arm64/*.dylib
