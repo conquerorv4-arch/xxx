@@ -1,7 +1,7 @@
 #pragma once
 
 #include <imgui.h>
-#cmath
+#include <cmath>
 
 #ifdef _WIN32
 #include <Windows.h>
