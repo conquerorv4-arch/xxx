@@ -1,10 +1,12 @@
 #pragma once
 
+#include <imgui.h>
+#cmath
+
+#ifdef _WIN32
 #include <Windows.h>
 #include <d3d11.h>
-#include <imgui.h>
-
-#include <cmath>
+#include <dxgi.h>
 
 struct render_texture
 {
@@ -143,3 +145,23 @@ private:
     ID3D11ShaderResourceView* copied_view_ = nullptr;
     ID3D11Buffer* bounds_buffer_ = nullptr;
 };
+
+#else
+
+// iOS / Metal mühiti üçün boş (stub) blur sinfi (xəta verməməsi üçün)
+class c_blureffect final
+{
+public:
+    c_blureffect() = default;
+    ~c_blureffect() = default;
+
+    template <typename... Args>
+    bool setup(Args&&...) { return true; }
+    void release() noexcept {}
+    bool ready() const noexcept { return false; }
+    bool matches_display(const ImVec2&) const noexcept { return true; }
+    template <typename... Args>
+    void draw(Args&&...) {}
+};
+
+#endif
