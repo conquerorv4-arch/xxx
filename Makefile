@@ -12,13 +12,13 @@ TWEAK_NAME = M7MD
 
 M7MD_FRAMEWORKS = IOKit UIKit Foundation Security QuartzCore CoreGraphics CoreText AVFoundation Accelerate GLKit SystemConfiguration GameController JRMemory Metal MetalKit
 
-# CFLAGS tənzimləmələri və qovluq yolları
+# CFLAGS tənzimləmələri və qovluq yolları (compatibility.h daxil edildi)
 M7MD_CCFLAGS = -w -std=gnu++14 -fno-rtti -fno-exceptions -DNDEBUG -Wno-module-import-in-extern-c
-M7MD_CFLAGS = -w -fobjc-arc -Wno-deprecated-declarations -Wno-unused-variable -Wno-unused-value -I/opt/theos/include -I./imgui -I./generated -I./framework -I./.
+M7MD_CFLAGS = -w -fobjc-arc -Wno-deprecated-declarations -Wno-unused-variable -Wno-unused-value -I/opt/theos/include -I./imgui -I./generated -I./framework -I./. -include compatibility.h
 
 M7MD_LDFLAGS += -F. -framework JRMemory
 
-# Bütün yeni menyu, framework, generated və köhnə fayllar tam daxil edildi
+# Bütün menyu, framework, generated və digər fayllar tam siyahı ilə
 M7MD_FILES = $(wildcard generated/*.cpp) \
              $(wildcard generated/*.mm) \
              $(wildcard framework/*.cpp) \
