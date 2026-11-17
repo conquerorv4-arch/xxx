@@ -1,10 +1,11 @@
 #pragma once
 
-#include <d3d11.h>
 #include <imgui.h>
-
 #include <cstddef>
 #include <cstdint>
+
+#ifdef _WIN32
+#include <d3d11.h>
 
 class c_image final
 {
@@ -33,3 +34,27 @@ private:
     ID3D11ShaderResourceView* view_ = nullptr;
     ImVec2 size_{ };
 };
+
+#else
+
+// iOS / Metal mühiti üçün xəta verməyən sadələşdirilmiş image sinfi
+class c_image final
+{
+public:
+    c_image( ) = default;
+    ~c_image( ) = default;
+
+    template <typename... Args>
+    bool load( Args&&... ) { return true; }
+    void release( ) noexcept {}
+    bool ready( ) const noexcept { return false; }
+    ImVec2 size( ) const noexcept { return ImVec2{ 0, 0 }; }
+
+#if IMGUI_VERSION_NUM >= 19200
+    operator ImTextureRef( ) const noexcept { return ImTextureRef{ 0 }; }
+#else
+    operator ImTextureID( ) const noexcept { return (ImTextureID)0; }
+#endif
+};
+
+#endif
