@@ -8,8 +8,10 @@ TWEAK_NAME = M7MD
 
 M7MD_FILES = Tweak.mm $(wildcard generated/*.cpp)
 
-# Xəbərdarlıqların build-i dayandırmasının qarşısını alırıq
-ADDITIONAL_CFLAGS += -fno-modules -std=c++17 -Wno-c++17-extensions -Wno-unused-const-variable -Wno-error -I./imgui -I./fonts -I./
-ADDITIONAL_CCFLAGS += -fno-modules -std=c++17 -Wno-c++17-extensions -Wno-unused-const-variable -Wno-error -I./imgui -I./fonts -I./
+# Clang-ın daxili daxiletmə qovluğunu sistem yolu olaraq əlavə edirik
+CLANG_INC = $(shell dirname $(shell which clang))/../lib/clang/$(shell clang -dumpversion)/include
+
+ADDITIONAL_CFLAGS += -fno-modules -std=c++17 -Wno-c++17-extensions -isystem $(CLANG_INC) -I./imgui -I./fonts -I./
+ADDITIONAL_CCFLAGS += -fno-modules -std=c++17 -Wno-c++17-extensions -isystem $(CLANG_INC) -I./imgui -I./fonts -I./
 
 include $(THEOS_MAKE_PATH)/tweak.mk
