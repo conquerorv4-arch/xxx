@@ -151,18 +151,10 @@ struct D3D11_MAPPED_SUBRESOURCE {
     UINT DepthPitch;
 };
 
-// `set_graphics` çağırışındakı tip ziddiyyətini həll etmək üçün overload əlavə edirik
+// set_graphics təkrarını önləmək üçün namespace daxilində elan edirik
 namespace lazyui {
-    inline struct {
-        ID3D11Device* device = nullptr;
-        IDXGISwapChain* swap_chain = nullptr;
-        HWND window = nullptr;
-        ID3D11DeviceContext* device_context = nullptr;
-    } app;
+    inline void set_graphics(ID3D11Device*, IDXGISwapChain*) {}
 }
-
-inline void set_graphics(void*, void*) {}
-inline void set_graphics(ID3D11Device*, IDXGISwapChain*) {}
 
 // Funksiya stub-ları
 inline int PostMessageW(void*, unsigned int, unsigned long long, long long) { return 0; }
