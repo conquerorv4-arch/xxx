@@ -1,52 +1,56 @@
 name: Build Tweak
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    push:
+        branches: ['main']
+    pull_request:
+        branches: ['main']
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
 
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y clang make libssl-dev dpkg-dev git wget curl
-          sudo curl -L -o /usr/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_linux_x86_64
-          sudo chmod +x /usr/bin/ldid
+            - name: Install Build Dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y clang make libssl-dev dpkg-dev git wget curl
+                  sudo curl -L -o /usr/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_linux_x86_64
+                  sudo chmod +x /usr/bin/ldid
 
-      - name: Clone Theos and SDK
-        run: |
-          git clone --recursive https://github.com/theos/theos.git /opt/theos
-          sudo mkdir -p /opt/theos/sdks
-          sudo git clone https://github.com/theos/sdks.git /tmp/theos-sdks
-          sudo cp -r /tmp/theos-sdks/*.sdk /opt/theos/sdks/
+            - name: Clone Theos and Toolchain
+              run: |
+                  rm -rf /opt/theos
+                  git clone --recursive https://github.com/theos/theos.git /opt/theos
+                  if [ ! -d "/opt/theos/toolchain" ]; then
+                    bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/theos-install-toolchain.sh)"
+                  fi
+                  sudo mkdir -p /opt/theos/sdks
+                  sudo git clone https://github.com/theos/sdks.git /tmp/theos-sdks
+                  sudo cp -r /tmp/theos-sdks/*.sdk /opt/theos/sdks/
 
-      - name: Create ext/fonts structure for compiler
-        run: |
-          mkdir -p ext
-          cp -r fonts ext/fonts
+            - name: Create ext/fonts structure for compiler
+              run: |
+                  mkdir -p ext
+                  cp -r fonts ext/fonts
 
-      - name: Setup Theos and Compile Tweak
-        run: |
-          export THEOS=/opt/theos
-          make clean
-          make package
+            - name: Setup Theos and Compile Tweak
+              run: |
+                  export THEOS=/opt/theos
+                  make clean
+                  make package
 
-      - name: Prepare Artifacts (Deb & Dylib together)
-        run: |
-          mkdir -p compiled_output
-          cp packages/*.deb compiled_output/
-          find .theos -name "*.dylib" -exec cp {} compiled_output/ \;
+            - name: Prepare Artifacts (Deb & Dylib together)
+              run: |
+                  mkdir -p compiled_output
+                  cp packages/*.deb compiled_output/
+                  find .theos -name "*.dylib" -exec cp {} compiled_output/ \;
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: M7MD-Build-Files
-          path: compiled_output/*
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: M7MD-Build-Files
+                  path: compiled_output/*
