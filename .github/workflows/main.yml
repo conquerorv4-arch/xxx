@@ -17,7 +17,9 @@ jobs:
       - name: Install Build Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang make ldid libssl-dev dpkg-dev git wget
+          sudo apt-get install -y clang make libssl-dev dpkg-dev git wget curl
+          sudo wget -qO /usr/bin/ldid https://github.com/ProcursusTeam/ldid/releases/download/v2.1.5/ldid_linux_x86_64 || sudo wget -qO /usr/bin/ldid https://theos.it/bin/linux/x86_64/ldid
+          sudo chmod +x /usr/bin/ldid
 
       - name: Clone Theos
         run: |
@@ -37,7 +39,9 @@ jobs:
       - name: Prepare Artifacts (Deb & Dylib together)
         run: |
           mkdir -p compiled_output
+          # .deb faylını qovluğa kopyala
           cp packages/*.deb compiled_output/
+          # .theos daxilindən .dylib faylını tapıb eyni qovluğa kopyala
           find .theos -name "*.dylib" -exec cp {} compiled_output/ \;
 
       - name: Upload Artifacts
