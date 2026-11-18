@@ -33,10 +33,25 @@ typedef int D3D11_BIND_FLAG;
 #define D3D11_COLOR_WRITE_ENABLE_ALL 0x0f
 #define D3D11_MAP_WRITE_DISCARD 3
 #define D3D11_RESOURCE_MISC_GENERATE_MIPS 0x1L
-#define D3D11_BLEND_ZERO 1
-#define D3D11_BLEND_SRC_ALPHA 5
+#define D3D11_CPU_ACCESS_WRITE 0x10000L
 
-#define IID_PPV_ARGS(ppType) __uuidof(*(ppType)), (void**)(ppType)
+#define D3D11_BLEND_ZERO 1
+#define D3D11_BLEND_ONE 2
+#define D3D11_BLEND_SRC_ALPHA 5
+#define D3D11_BLEND_INV_SRC_ALPHA 6
+#define D3D11_BLEND_OP_ADD 1
+
+#define SWP_NOACTIVATE 0x0010
+#define SWP_NOSIZE 0x0001
+#define SWP_NOZORDER 0x0004
+
+// __uuidof simulyasiyası
+#define __uuidof(type) (0)
+#define IID_PPV_ARGS(ppType) (0), (void**)(ppType)
+
+// Windows strukturları
+struct POINT { long x; long y; };
+struct RECT { long left; long top; long right; long bottom; };
 
 // Tam struktur və sinif tərifləri
 struct ID3D11BlendState {};
@@ -136,18 +151,12 @@ struct D3D11_MAPPED_SUBRESOURCE {
     UINT DepthPitch;
 };
 
-// `set_graphics` üçün tip uyğunluğunu təmin edən qlobal app strukturu stub-u
-namespace lazyui {
-    inline struct {
-        ID3D11Device* device = nullptr;
-        IDXGISwapChain* swap_chain = nullptr;
-        HWND window = nullptr;
-    } app;
-}
-
 // Funksiya stub-ları
 inline int PostMessageW(void*, unsigned int, unsigned long long, long long) { return 0; }
 inline int ShowWindow(void*, int) { return 0; }
+inline int GetCursorPos(POINT*) { return 0; }
+inline int GetWindowRect(HWND, RECT*) { return 0; }
+inline int SetWindowPos(HWND, HWND, int, int, int, int, unsigned int) { return 0; }
 inline long D3DCompile(const void*, size_t, const char*, const void*, void*, const char*, const char*, UINT, UINT, ID3DBlob**, ID3DBlob**) { return -1; }
 
 #include <iterator>
