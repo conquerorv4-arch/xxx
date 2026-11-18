@@ -9,7 +9,6 @@
 typedef unsigned long size_t;
 #endif
 
-// nullptr_t dəstəyi üçün uyğunlaşdırma
 #ifdef __cplusplus
 namespace std {
     typedef decltype(nullptr) nullptr_t;
@@ -17,15 +16,21 @@ namespace std {
 using std::nullptr_t;
 #endif
 
-// DirectX və Windows tiplərinin iOS üçün uyğunlaşdırılması (Mock)
+// Windows API Mock for iOS
+typedef void* HWND;
 typedef void* ID3D11Device;
 typedef void* ID3D11DeviceContext;
 typedef void* IDXGISwapChain;
 typedef void* ID3DBlob;
-typedef void* HWND;
 
 typedef unsigned int UINT;
 typedef unsigned long DWORD;
+
+#define WM_CLOSE 0x0010
+#define SW_MINIMIZE 6
+
+inline void PostMessageW(HWND, UINT, DWORD, DWORD) {}
+inline void ShowWindow(HWND, int) {}
 
 struct D3D11_BLEND_DESC {
     int dummy;
