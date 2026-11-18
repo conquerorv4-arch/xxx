@@ -1,9 +1,13 @@
 #pragma once
 
 #ifndef _WIN32
+#include <stddef.h>
+
 #define HWND void*
 #define WM_CLOSE 0x0010
 #define SW_MINIMIZE 6
+#define FALSE 0
+#define TRUE 1
 
 // Əsas Windows tipləri və sabitlər
 typedef unsigned int UINT;
@@ -26,29 +30,47 @@ typedef int D3D11_BIND_FLAG;
 #define D3D11_BIND_SHADER_RESOURCE 0x08L
 #define D3D11_BIND_CONSTANT_BUFFER 0x01L
 
-typedef int D3D11_CPU_ACCESS_FLAG;
-#define D3D11_CPU_ACCESS_WRITE 0x10000L
+#define D3D11_COLOR_WRITE_ENABLE_ALL 0x0f
+#define D3D11_MAP_WRITE_DISCARD 3
 
-// Tam struktur və sinif tərifləri (incomplete type xətalarını önləmək üçün)
+// Tam struktur və sinif tərifləri
+struct ID3D11BlendState {};
+struct ID3D11Resource {
+    template<typename... T> long QueryInterface(T...) { return 0; }
+    void Release() {}
+};
+struct ID3D11Texture2D {
+    template<typename... T> void GetDesc(T...) {}
+    void Release() {}
+};
+
 struct ID3D11Device {
     template<typename... T> long CreateTexture2D(T...) { return 0; }
     template<typename... T> long CreateRenderTargetView(T...) { return 0; }
     template<typename... T> long CreateShaderResourceView(T...) { return 0; }
     template<typename... T> long CreatePixelShader(T...) { return 0; }
     template<typename... T> long CreateBuffer(T...) { return 0; }
+    template<typename... T> long CreateBlendState(T...) { return 0; }
 };
 
 struct ID3D11DeviceContext {
     template<typename... T> void ClearRenderTargetView(T...) {}
+    template<typename... T> void OMGetRenderTargets(T...) {}
+    template<typename... T> void PSSetShaderResources(T...) {}
+    template<typename... T> void ResolveSubresource(T...) {}
+    template<typename... T> void CopySubresourceRegion(T...) {}
+    template<typename... T> long Map(T...) { return 0; }
+    template<typename... T> void Unmap(T...) {}
 };
 
 struct IDXGISwapChain {};
 struct ID3D11ShaderResourceView { void Release() {} };
-struct ID3D11Texture2D { void Release() {} };
-struct ID3D11RenderTargetView { void Release() {} };
+struct ID3D11RenderTargetView {
+    template<typename... T> void GetResource(T...) {}
+    void Release() {}
+};
 struct ID3D11PixelShader {};
 struct ID3D11Buffer {};
-struct ID3D11BlendState {};
 
 struct ID3DBlob {
     void* GetBufferPointer() { return nullptr; }
@@ -77,6 +99,29 @@ struct D3D11_BUFFER_DESC {
     UINT CPUAccessFlags;
     UINT MiscFlags;
     UINT StructureByteStride;
+};
+
+struct D3D11_RENDER_TARGET_BLEND_DESC {
+    int BlendEnable;
+    int SrcBlend;
+    int DestBlend;
+    int BlendOp;
+    int SrcBlendAlpha;
+    int DestBlendAlpha;
+    int BlendOpAlpha;
+    unsigned char RenderTargetWriteMask;
+};
+
+struct D3D11_BLEND_DESC {
+    int AlphaToCoverageEnable;
+    int IndependentBlendEnable;
+    D3D11_RENDER_TARGET_BLEND_DESC RenderTarget[8];
+};
+
+struct D3D11_MAPPED_SUBRESOURCE {
+    void* pData;
+    UINT RowPitch;
+    UINT DepthPitch;
 };
 
 // Funksiya stub-ları
