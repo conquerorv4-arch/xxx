@@ -32,6 +32,11 @@ typedef int D3D11_BIND_FLAG;
 
 #define D3D11_COLOR_WRITE_ENABLE_ALL 0x0f
 #define D3D11_MAP_WRITE_DISCARD 3
+#define D3D11_RESOURCE_MISC_GENERATE_MIPS 0x1L
+#define D3D11_BLEND_ZERO 1
+#define D3D11_BLEND_SRC_ALPHA 5
+
+#define IID_PPV_ARGS(ppType) __uuidof(*(ppType)), (void**)(ppType)
 
 // Tam struktur və sinif tərifləri
 struct ID3D11BlendState {};
@@ -39,9 +44,13 @@ struct ID3D11Resource {
     template<typename... T> long QueryInterface(T...) { return 0; }
     void Release() {}
 };
-struct ID3D11Texture2D {
+struct ID3D11Texture2D : public ID3D11Resource {
     template<typename... T> void GetDesc(T...) {}
-    void Release() {}
+};
+
+struct ID3D11Device;
+struct IDXGISwapChain {
+    template<typename... T> long GetBuffer(T...) { return 0; }
 };
 
 struct ID3D11Device {
@@ -61,13 +70,16 @@ struct ID3D11DeviceContext {
     template<typename... T> void CopySubresourceRegion(T...) {}
     template<typename... T> long Map(T...) { return 0; }
     template<typename... T> void Unmap(T...) {}
+    template<typename... T> void PSSetConstantBuffers(T...) {}
+    template<typename... T> void PSSetShader(T...) {}
+    template<typename... T> void OMSetBlendState(T...) {}
+    template<typename... T> void GenerateMips(T...) {}
+    template<typename... T> void OMSetRenderTargets(T...) {}
 };
 
-struct IDXGISwapChain {};
 struct ID3D11ShaderResourceView { void Release() {} };
-struct ID3D11RenderTargetView {
+struct ID3D11RenderTargetView : public ID3D11Resource {
     template<typename... T> void GetResource(T...) {}
-    void Release() {}
 };
 struct ID3D11PixelShader {};
 struct ID3D11Buffer {};
@@ -123,6 +135,15 @@ struct D3D11_MAPPED_SUBRESOURCE {
     UINT RowPitch;
     UINT DepthPitch;
 };
+
+// `set_graphics` üçün tip uyğunluğunu təmin edən qlobal app strukturu stub-u
+namespace lazyui {
+    inline struct {
+        ID3D11Device* device = nullptr;
+        IDXGISwapChain* swap_chain = nullptr;
+        HWND window = nullptr;
+    } app;
+}
 
 // Funksiya stub-ları
 inline int PostMessageW(void*, unsigned int, unsigned long long, long long) { return 0; }
