@@ -53,7 +53,7 @@ typedef int D3D11_BIND_FLAG;
 struct POINT { long x; long y; };
 struct RECT { long left; long top; long right; long bottom; };
 
-// Bütün DirectX strukturlarına Release() metodu əlavə olundu
+// DirectX strukturları
 struct ID3D11BlendState { void Release() {} };
 struct ID3D11Resource {
     template<typename... T> long QueryInterface(T...) { return 0; }
@@ -150,6 +150,19 @@ struct D3D11_MAPPED_SUBRESOURCE {
     UINT RowPitch;
     UINT DepthPitch;
 };
+
+// `set_graphics` çağırışındakı tip ziddiyyətini həll etmək üçün overload əlavə edirik
+namespace lazyui {
+    inline struct {
+        ID3D11Device* device = nullptr;
+        IDXGISwapChain* swap_chain = nullptr;
+        HWND window = nullptr;
+        ID3D11DeviceContext* device_context = nullptr;
+    } app;
+}
+
+inline void set_graphics(void*, void*) {}
+inline void set_graphics(ID3D11Device*, IDXGISwapChain*) {}
 
 // Funksiya stub-ları
 inline int PostMessageW(void*, unsigned int, unsigned long long, long long) { return 0; }
