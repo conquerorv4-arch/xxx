@@ -10,12 +10,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image: parsuj/theos:latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang make ldid libssl-dev dpkg-dev git wget
+
+      - name: Clone Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git /opt/theos
 
       - name: Create ext/fonts structure for compiler
         run: |
@@ -31,9 +37,7 @@ jobs:
       - name: Prepare Artifacts (Deb & Dylib together)
         run: |
           mkdir -p compiled_output
-          # .deb faylını qovluğa kopyala
           cp packages/*.deb compiled_output/
-          # .theos daxilindən .dylib faylını tapıb eyni qovluğa kopyala
           find .theos -name "*.dylib" -exec cp {} compiled_output/ \;
 
       - name: Upload Artifacts
