@@ -8,8 +8,8 @@ TWEAK_NAME = M7MD
 
 M7MD_FILES = Tweak.mm $(wildcard generated/*.cpp)
 
-# Yalnız kompilyatorun dəstəklədiyi təmiz bayraqları saxlayırıq
-ADDITIONAL_CFLAGS += -fno-modules -I./fonts -I./
-ADDITIONAL_CCFLAGS += -fno-modules -I./fonts -I./
+# ImGui, fontlar və cari qovluq daxiletmə yolları (-I)
+ADDITIONAL_CFLAGS += -fno-modules -I./imgui -I./fonts -I./
+ADDITIONAL_CCFLAGS += -fno-modules -I./imgui -I./fonts -I./
 
 include $(THEOS_MAKE_PATH)/tweak.mk
