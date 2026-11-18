@@ -6,7 +6,8 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = M7MD
 
-M7MD_FILES = Tweak.x $(wildcard generated/*.cpp)
+# Əgər əsas faylın adı Tweak.xm-dirsə buranı Tweak.xm saxla, əgər başqadırsa adını yaz
+M7MD_FILES = Tweak.xm $(wildcard generated/*.cpp)
 
 # Modul xətalarını aradan qaldıran və başlıq qovluqlarını tənzimləyən bayraqlar
 ADDITIONAL_CFLAGS += -fno-modules -Xclang -fno-implicit-modules -Xclang -fno-implicit-module-maps -I./fonts -I./
