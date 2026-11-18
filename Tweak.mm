@@ -5,11 +5,10 @@
 #import <mach-o/dyld.h>
 #import <mach/mach_traps.h>
 
-// Global variables
+// Global variables to store the state of CheckBoxes
 bool LockStatus = false;
 bool SpeedPlayer = false;
 
-// ASLR yoxlaması
 bool hasASLR() {
     const struct mach_header *mach = _dyld_get_image_header(0);
     return (mach->flags & MH_PIE) ? TRUE : FALSE;
@@ -59,20 +58,31 @@ bool vm_writeData(long long offset, unsigned int data) {
 void setLockStatus(bool state) {
     LockStatus = state;
     if (LockStatus) {
-        vm_writeData(0x102CA170C, 0x1F2003D5);
-        NSLog(@"[M7MD] LockStatus enabled");
+        bool success = vm_writeData(0x102CA170C, 0x1F2003D5);
+        if (success) {
+            NSLog(@"[M7MD] LockStatus enabled successfully");
+        } else {
+            NSLog(@"[M7MD] Failed to enable LockStatus");
+        }
+    } else {
+        NSLog(@"[M7MD] LockStatus disabled");
     }
 }
 
 void setSpeedPlayer(bool state) {
     SpeedPlayer = state;
     if (SpeedPlayer) {
-        vm_writeData(0x102C10D84, 0x0810281E);
-        NSLog(@"[M7MD] SpeedPlayer enabled");
+        bool success = vm_writeData(0x102C10D84, 0x0810281E);
+        if (success) {
+            NSLog(@"[M7MD] SpeedPlayer enabled successfully");
+        } else {
+            NSLog(@"[M7MD] Failed to enable SpeedPlayer");
+        }
+    } else {
+        NSLog(@"[M7MD] SpeedPlayer disabled");
     }
 }
 
-// UI Hook və ya Controller əlavəsi
 %ctor {
-    NSLog(@"[M7MD] Tweak.mm loaded successfully!");
+    NSLog(@"[M7MD] Tweak loaded successfully!");
 }
