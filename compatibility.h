@@ -1,15 +1,36 @@
-THEOS_DEVICE_IP = 127.0.0.1
-ARCHS = arm64
-TARGET = iphone:clang:16.5:14.0
+#pragma once
 
-include $(THEOS)/makefiles/common.mk
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdint.h>
 
-TWEAK_NAME = M7MD
+#ifndef _SIZE_T
+#define _SIZE_T
+typedef unsigned long size_t;
+#endif
 
-M7MD_FILES = Tweak.mm $(wildcard generated/*.cpp)
+// nullptr_t dəstəyi üçün uyğunlaşdırma
+#ifdef __cplusplus
+namespace std {
+    typedef decltype(nullptr) nullptr_t;
+}
+using std::nullptr_t;
+#endif
 
-# ImGui, fontlar və cari qovluq daxiletmə yolları (-I)
-ADDITIONAL_CFLAGS += -fno-modules -I./imgui -I./fonts -I./
-ADDITIONAL_CCFLAGS += -fno-modules -I./imgui -I./fonts -I./
+// DirectX və Windows tiplərinin iOS üçün uyğunlaşdırılması (Mock)
+typedef void* ID3D11Device;
+typedef void* ID3D11DeviceContext;
+typedef void* IDXGISwapChain;
+typedef void* ID3DBlob;
+typedef void* HWND;
 
-include $(THEOS_MAKE_PATH)/tweak.mk
+typedef unsigned int UINT;
+typedef unsigned long DWORD;
+
+struct D3D11_BLEND_DESC {
+    int dummy;
+};
+
+inline long D3DCompile(const void*, size_t, const char*, const void*, void*, const char*, const char*, UINT, UINT, ID3DBlob**, ID3DBlob**) { 
+    return -1; 
+}
