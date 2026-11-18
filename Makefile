@@ -6,10 +6,10 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = M7MD
 
-# Əsas fayl olaraq Tweak.mm göstərilir
 M7MD_FILES = Tweak.mm $(wildcard generated/*.cpp)
 
-ADDITIONAL_CFLAGS += -fno-modules -Xclang -fno-implicit-modules -Xclang -fno-implicit-module-maps -I./fonts -I./
-ADDITIONAL_CCFLAGS += -fno-modules -Xclang -fno-implicit-modules -Xclang -fno-implicit-module-maps -I./fonts -I./
+# Yalnız kompilyatorun dəstəklədiyi təmiz bayraqları saxlayırıq
+ADDITIONAL_CFLAGS += -fno-modules -I./fonts -I./
+ADDITIONAL_CCFLAGS += -fno-modules -I./fonts -I./
 
 include $(THEOS_MAKE_PATH)/tweak.mk
