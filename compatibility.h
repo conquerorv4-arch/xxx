@@ -1,12 +1,10 @@
 #pragma once
 
 #ifndef _WIN32
-// Windows API elementlərini və DirectX strukturlarını iOS üçün stub edirik
 #define HWND void*
 #define WM_CLOSE 0x0010
 #define SW_MINIMIZE 6
 
-// typedef əvəzinə struct kimi irəlidən elan edirik ki, ziddiyyət yaranmasın
 struct ID3D11Device;
 struct ID3D11DeviceContext;
 struct IDXGISwapChain;
@@ -24,7 +22,4 @@ namespace std {
     template <typename T, std::size_t N>
     constexpr auto size(const T(&)[N]) noexcept { return N; }
 }
-
-// d3d11.h tələb olunduqda xəta verməsin deyə boş başlıq təmin edirik
-#define __D3D11_H__
 #endif
