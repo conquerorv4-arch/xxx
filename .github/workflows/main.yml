@@ -25,7 +25,13 @@ jobs:
         run: |
           rm -rf /opt/theos
           git clone --recursive https://github.com/theos/theos.git /opt/theos
-          bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/theos-install-toolchain.sh)"
+          sudo mkdir -p /opt/theos/toolchain/linux/iphone/bin
+          sudo cp /usr/bin/clang /opt/theos/toolchain/linux/iphone/bin/clang
+          sudo cp /usr/bin/clang++ /opt/theos/toolchain/linux/iphone/bin/clang++
+          sudo ln -sf /usr/bin/clang /opt/theos/toolchain/linux/iphone/bin/armv7-apple-darwin-clang
+          sudo ln -sf /usr/bin/clang++ /opt/theos/toolchain/linux/iphone/bin/armv7-apple-darwin-clang++
+          sudo ln -sf /usr/bin/clang /opt/theos/toolchain/linux/iphone/bin/aarch64-apple-darwin-clang
+          sudo ln -sf /usr/bin/clang++ /opt/theos/toolchain/linux/iphone/bin/aarch64-apple-darwin-clang++
           sudo mkdir -p /opt/theos/sdks
           sudo git clone https://github.com/theos/sdks.git /tmp/theos-sdks
           sudo cp -r /tmp/theos-sdks/*.sdk /opt/theos/sdks/
