@@ -1,70 +1,15 @@
+THEOS_DEVICE_IP = 127.0.0.1
 ARCHS = arm64
-DEBUG = 0
-FINALPACKAGE = 1
-FOR_RELEASE = 1
-THEOS_PACKAGE_SCHEME = rootless
-
-STRIP = strip
+TARGET = iphone:clang:16.5:14.0
 
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = M7MD
 
-M7MD_FRAMEWORKS = IOKit UIKit Foundation Security QuartzCore CoreGraphics CoreText AVFoundation Accelerate GLKit SystemConfiguration GameController JRMemory Metal MetalKit
+M7MD_FILES = Tweak.x $(wildcard generated/*.cpp)
 
-# CFLAGS tənzimləmələri (kök qovluq və ext simulyasiyası üçün -I./ -I./fonts əlavə olundu)
-M7MD_CCFLAGS = -w -std=gnu++14 -fno-rtti -fno-exceptions -DNDEBUG -Wno-module-import-in-extern-c
-M7MD_CFLAGS = -w -fobjc-arc -Wno-deprecated-declarations -Wno-unused-variable -Wno-unused-value -I/opt/theos/include -I./imgui -I./generated -I./framework -I./fonts -I./ -include compatibility.h
+# Modul xətalarını aradan qaldıran və başlıq qovluqlarını tənzimləyən bayraqlar
+ADDITIONAL_CFLAGS += -fno-modules -Xclang -fno-implicit-modules -Xclang -fno-implicit-module-maps -I./fonts -I./
+ADDITIONAL_CCFLAGS += -fno-modules -Xclang -fno-implicit-modules -Xclang -fno-implicit-module-maps -I./fonts -I./
 
-M7MD_LDFLAGS += -F. -framework JRMemory
-
-# Bütün menyu, framework, generated və digər fayllar tam siyahı ilə
-M7MD_FILES = $(wildcard generated/*.cpp) \
-             $(wildcard generated/*.mm) \
-             $(wildcard framework/*.cpp) \
-             $(wildcard framework/pages/*.cpp) \
-             $(wildcard Menu/*.cpp) \
-             $(wildcard Common/*.cpp) \
-             $(wildcard lazyui_runtime.cpp) \
-             $(wildcard imgui/*.cpp) \
-             $(wildcard imgui/*.mm) \
-             View/OverlayView.mm \
-             View/FloatView.mm \
-             View/ImageResources.m \
-             $(wildcard CustomView/*.m) \
-             $(wildcard ESP/*.mm) \
-             $(wildcard ESP/*.cpp) \
-             $(wildcard utils/*.cpp) \
-             $(wildcard utils/*.m) \
-             $(wildcard SDK/SHANKS_PUBGM_Basic.cpp) \
-             $(wildcard SDK/SHANKS_PUBGM_Basic_functions.cpp) \
-             $(wildcard SDK/SHANKS_PUBGM_CoreUObject_functions.cpp) \
-             $(wildcard SDK/SHANKS_PUBGM_Engine_functions.cpp) \
-             $(wildcard SDK/SHANKS_PUBGM_ShadowTrackerExtra_functions.cpp) \
-             $(wildcard SDK/SHANKS_PUBGM_Client_functions.cpp) \
-             $(wildcard SDK/SHANKS_PUBGM_Gameplay_functions.cpp) \
-             $(wildcard 菜单/*.mm) \
-             $(wildcard libPUBGHookDylib3/*.h) \
-             $(wildcard NSURL+hook/*.h) \
-             $(wildcard NSURL+hook/*.m) \
-             $(wildcard MBProgressHUD/*.m) \
-             $(wildcard FCFileManager/*.m) \
-             $(wildcard NSEtcHosts/*.m) \
-             $(wildcard AppDelegate/*.h) \
-             $(wildcard ZXRequestBlock/*.h) \
-             $(wildcard DBLOCKRASHID/*.m) \
-             $(wildcard ZXURLProtocol/*.m) \
-             $(wildcard ZXURLProtocol/*.h) \
-             $(wildcard EtcHostsURLProtocol/*.m) \
-             $(wildcard NSObject+URL/*.m) \
-             $(wildcard FCFileManager/*.h) \
-             $(wildcard ViewController/*.m) \
-             $(wildcard ZXHttpIPGet/*.m) \
-             $(wildcard NSURLSession+ZXHttpProxy/*.m) \
-             $(wildcard main/*.m) \
-             $(wildcard ZXHttpIPGet/*.h) \
-             $(wildcard ViewController/*.h) \
-             $(wildcard 旁路/*.mm) \
-             $(wildcard behaviorbypassforESP/*.h)
-
-include $(THEOS)/makefiles/tweak.mk
+include $(THEOS_MAKE_PATH)/tweak.mk
