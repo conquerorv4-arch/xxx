@@ -20,7 +20,6 @@ jobs:
           sudo apt-get install -y clang make libssl-dev dpkg-dev git wget curl
           sudo curl -L -o /usr/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_linux_x86_64
           sudo chmod +x /usr/bin/ldid
-          ldid -v
 
       - name: Clone Theos
         run: |
