@@ -1,19 +1,21 @@
 #pragma once
 
-#include <stdarg.h>
+// nullptr_t problemini kökündən həll etmək üçün ilk növbədə təyin edirik
+#ifndef __cplusplus
 #include <stddef.h>
+#else
+namespace std {
+    typedef decltype(nullptr) nullptr_t;
+}
+using std::nullptr_t;
+#endif
+
+#include <stdarg.h>
 #include <stdint.h>
 
 #ifndef _SIZE_T
 #define _SIZE_T
 typedef unsigned long size_t;
-#endif
-
-#ifdef __cplusplus
-namespace std {
-    typedef decltype(nullptr) nullptr_t;
-}
-using std::nullptr_t;
 #endif
 
 // Windows API Mock for iOS
