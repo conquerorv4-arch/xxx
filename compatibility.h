@@ -151,6 +151,13 @@ struct D3D11_MAPPED_SUBRESOURCE {
     UINT DepthPitch;
 };
 
+// `set_graphics` tip uyğunsuzluğunu həll etmək üçün wrapper
+namespace lazyui {
+    inline void set_graphics(void* device, void* swap_chain) {
+        // iOS mühitində boş ötürülür
+    }
+}
+
 // Funksiya stub-ları
 inline int PostMessageW(void*, unsigned int, unsigned long long, long long) { return 0; }
 inline int ShowWindow(void*, int) { return 0; }
