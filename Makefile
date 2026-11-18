@@ -8,8 +8,10 @@ TWEAK_NAME = M7MD
 
 M7MD_FILES = Tweak.mm $(wildcard generated/*.cpp)
 
-# ImGui, fontlar və cari qovluq daxiletmə yolları (-I)
-ADDITIONAL_CFLAGS += -fno-modules -I./imgui -I./fonts -I./
-ADDITIONAL_CCFLAGS += -fno-modules -I./imgui -I./fonts -I./
+# Clang-ın daxili include qovluğunu tapıb sistem yolu kimi əlavə edirik
+CLANG_INCLUDE = $(shell dirname $$(which clang))/../lib/clang/$$(clang --version | grep version | awk '{print $$4}')/include
+
+ADDITIONAL_CFLAGS += -fno-modules -isystem $(CLANG_INCLUDE) -I./imgui -I./fonts -I./
+ADDITIONAL_CCFLAGS += -fno-modules -isystem $(CLANG_INCLUDE) -I./imgui -I./fonts -I./
 
 include $(THEOS_MAKE_PATH)/tweak.mk
