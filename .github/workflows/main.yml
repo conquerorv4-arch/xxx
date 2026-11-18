@@ -18,7 +18,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y clang make libssl-dev dpkg-dev git wget curl
-          sudo wget -qO /usr/bin/ldid https://github.com/ProcursusTeam/ldid/releases/download/v2.1.5/ldid_linux_x86_64
+          sudo curl -L -o /usr/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_linux_x86_64
           sudo chmod +x /usr/bin/ldid
           ldid -v
 
