@@ -8,8 +8,8 @@ TWEAK_NAME = M7MD
 
 M7MD_FILES = Tweak.mm $(wildcard generated/*.cpp)
 
-# C++ standartını c++14 və ya c++17 təyin edirik ki, nullptr_t problemi həll olunsun
-ADDITIONAL_CFLAGS += -fno-modules -std=c++14 -I./imgui -I./fonts -I./
-ADDITIONAL_CCFLAGS += -fno-modules -std=c++14 -I./imgui -I./fonts -I./
+# C++17 standartı, namespace xətalarının ignoru və compatibility.h faylının məcburi daxil edilməsi
+ADDITIONAL_CFLAGS += -fno-modules -std=c++17 -Wno-c++17-extensions -include compatibility.h -I./imgui -I./fonts -I./
+ADDITIONAL_CCFLAGS += -fno-modules -std=c++17 -Wno-c++17-extensions -include compatibility.h -I./imgui -I./fonts -I./
 
 include $(THEOS_MAKE_PATH)/tweak.mk
