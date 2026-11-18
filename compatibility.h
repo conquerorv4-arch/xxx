@@ -53,8 +53,8 @@ typedef int D3D11_BIND_FLAG;
 struct POINT { long x; long y; };
 struct RECT { long left; long top; long right; long bottom; };
 
-// Tam struktur və sinif tərifləri
-struct ID3D11BlendState {};
+// Bütün DirectX strukturlarına Release() metodu əlavə olundu
+struct ID3D11BlendState { void Release() {} };
 struct ID3D11Resource {
     template<typename... T> long QueryInterface(T...) { return 0; }
     void Release() {}
@@ -96,8 +96,8 @@ struct ID3D11ShaderResourceView { void Release() {} };
 struct ID3D11RenderTargetView : public ID3D11Resource {
     template<typename... T> void GetResource(T...) {}
 };
-struct ID3D11PixelShader {};
-struct ID3D11Buffer {};
+struct ID3D11PixelShader { void Release() {} };
+struct ID3D11Buffer { void Release() {} };
 
 struct ID3DBlob {
     void* GetBufferPointer() { return nullptr; }
