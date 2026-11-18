@@ -27,9 +27,17 @@ jobs:
           export THEOS=/opt/theos
           make clean
           make package
-          
+
+      - name: Prepare Artifacts (Deb & Dylib together)
+        run: |
+          mkdir -p compiled_output
+          # .deb faylını qovluğa kopyala
+          cp packages/*.deb compiled_output/
+          # .theos daxilindən .dylib faylını tapıb eyni qovluğa kopyala
+          find .theos -name "*.dylib" -exec cp {} compiled_output/ \;
+
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: compiled-deb-package
-          path: packages/*.deb
+          name: M7MD-Build-Files
+          path: compiled_output/*
