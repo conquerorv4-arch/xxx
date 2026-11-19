@@ -4,9 +4,7 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C++" {
 typedef decltype(nullptr) nullptr_t;
-}
 #endif
 
 #ifndef _SIZE_T
