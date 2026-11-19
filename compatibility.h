@@ -18,6 +18,15 @@ typedef unsigned int UINT;
 typedef unsigned long DWORD;
 typedef unsigned long ULONG;
 typedef long HRESULT;
+typedef int BOOL;
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#ifndef TRUE
+#define TRUE 1
+#endif
 
 #ifndef S_OK
 #define S_OK ((HRESULT)0L)
@@ -35,6 +44,18 @@ typedef long HRESULT;
 #define FAILED(hr) (((HRESULT)(hr)) < 0)
 #endif
 
+#ifndef D3D11_COLOR_WRITE_ENABLE_ALL
+#define D3D11_COLOR_WRITE_ENABLE_ALL 0x0f
+#endif
+
+#ifndef IID_PPV_ARGS
+#define IID_PPV_ARGS(ppType) __uuidof(**(ppType)), reinterpret_cast<void**>(ppType)
+#endif
+
+template <typename T>
+inline int __uuidof_stub() { return 0; }
+#define __uuidof(x) 0
+
 #define WM_CLOSE 0x0010
 #define SW_MINIMIZE 6
 
@@ -44,6 +65,11 @@ inline void ShowWindow(HWND, int) {}
 enum DXGI_FORMAT {
     DXGI_FORMAT_UNKNOWN = 0,
     DXGI_FORMAT_R8G8B8A8_UNORM = 28
+};
+
+struct DXGI_SAMPLE_DESC {
+    UINT Count = 1;
+    UINT Quality = 0;
 };
 
 enum D3D11_USAGE {
@@ -61,8 +87,35 @@ enum D3D11_BIND_FLAG {
     D3D11_BIND_RENDER_TARGET = 0x20L
 };
 
+enum D3D11_CPU_ACCESS_FLAG {
+    D3D11_CPU_ACCESS_WRITE = 0x10000L,
+    D3D11_CPU_ACCESS_READ = 0x20000L
+};
+
+struct D3D11_RENDER_TARGET_BLEND_DESC {
+    BOOL BlendEnable = FALSE;
+    int SrcBlend = 1;
+    int DestBlend = 0;
+    int BlendOp = 1;
+    int SrcBlendAlpha = 1;
+    int DestBlendAlpha = 0;
+    int BlendOpAlpha = 1;
+    UINT RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+};
+
 struct D3D11_BLEND_DESC {
-    int dummy;
+    BOOL AlphaToCoverageEnable = FALSE;
+    BOOL IndependentBlendEnable = FALSE;
+    D3D11_RENDER_TARGET_BLEND_DESC RenderTarget[8];
+};
+
+struct D3D11_BUFFER_DESC {
+    UINT ByteWidth = 0;
+    D3D11_USAGE Usage = D3D11_USAGE_DEFAULT;
+    UINT BindFlags = 0;
+    UINT CPUAccessFlags = 0;
+    UINT MiscFlags = 0;
+    UINT StructureByteStride = 0;
 };
 
 struct D3D11_TEXTURE2D_DESC {
@@ -71,8 +124,7 @@ struct D3D11_TEXTURE2D_DESC {
     UINT MipLevels = 1;
     UINT ArraySize = 1;
     DXGI_FORMAT Format = DXGI_FORMAT_UNKNOWN;
-    UINT SampleDescCount = 1;
-    UINT SampleDescQuality = 0;
+    DXGI_SAMPLE_DESC SampleDesc;
     D3D11_USAGE Usage = D3D11_USAGE_DEFAULT;
     UINT BindFlags = 0;
     UINT CPUAccessFlags = 0;
@@ -83,8 +135,31 @@ struct ID3D11BlendState {
     void Release() {}
 };
 
+struct ID3D11Buffer {
+    void Release() {}
+};
+
+struct ID3D11RenderTargetView {
+    void Release() {}
+};
+
+struct ID3D11Resource {
+    void Release() {}
+    HRESULT QueryInterface(int, void** ppv) {
+        if (ppv) *ppv = nullptr;
+        return E_FAIL;
+    }
+};
+
 struct ID3D11Texture2D {
     void Release() {}
+    HRESULT QueryInterface(int, void** ppv) {
+        if (ppv) *ppv = nullptr;
+        return E_FAIL;
+    }
+    void GetDesc(D3D11_TEXTURE2D_DESC* pDesc) {
+        if (pDesc) *pDesc = D3D11_TEXTURE2D_DESC{};
+    }
 };
 
 struct ID3D11ShaderResourceView {
@@ -102,6 +177,11 @@ struct ID3D11DeviceContext {
     void PSSetShaderResources(UINT, UINT, ID3D11ShaderResourceView* const*) {}
     void PSSetSamplers(UINT, UINT, void* const*) {}
     void OMSetBlendState(ID3D11BlendState*, const float[4], UINT) {}
+    void OMGetRenderTargets(UINT NumViews, ID3D11RenderTargetView** ppRenderTargetViews, void** ppDepthStencilView) {
+        if (ppRenderTargetViews && NumViews > 0) ppRenderTargetViews[0] = nullptr;
+        if (ppDepthStencilView) *ppDepthStencilView = nullptr;
+    }
+    void ResolveSubresource(ID3D11Texture2D*, UINT, ID3D11Texture2D*, UINT, DXGI_FORMAT) {}
     void Draw(UINT, UINT) {}
     void CopyResource(ID3D11Texture2D*, ID3D11Texture2D*) {}
 };
@@ -120,6 +200,10 @@ struct ID3D11Device {
     void Release() {}
     void GetImmediateContext(ID3D11DeviceContext** ppImmediateContext) {
         if (ppImmediateContext) *ppImmediateContext = nullptr;
+    }
+    HRESULT CreateBuffer(const D3D11_BUFFER_DESC*, const void*, ID3D11Buffer** ppBuffer) {
+        if (ppBuffer) *ppBuffer = nullptr;
+        return E_FAIL;
     }
     HRESULT CreateTexture2D(const D3D11_TEXTURE2D_DESC*, const void*, ID3D11Texture2D** ppTexture2D) {
         if (ppTexture2D) *ppTexture2D = nullptr;
