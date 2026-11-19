@@ -1,17 +1,13 @@
 #pragma once
 
-// nullptr_t problemini kökündən həll etmək üçün ilk növbədə təyin edirik
-#ifndef __cplusplus
-#include <stddef.h>
-#else
-namespace std {
-    typedef decltype(nullptr) nullptr_t;
-}
-using std::nullptr_t;
-#endif
-
 #include <stdarg.h>
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C++" {
+typedef decltype(nullptr) nullptr_t;
+}
+#endif
 
 #ifndef _SIZE_T
 #define _SIZE_T
