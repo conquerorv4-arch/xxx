@@ -83,6 +83,7 @@ void setSpeedPlayer(bool state) {
     }
 }
 
-%ctor {
+__attribute__((constructor))
+static void m7md_init() {
     NSLog(@"[M7MD] Tweak loaded successfully!");
 }
